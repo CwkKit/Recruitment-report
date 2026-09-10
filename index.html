@@ -9,13 +9,18 @@
     
     <style>
         :root {
-            --bg-color: #F8F9FA;
+            --bg-color: #F8FAFC;
             --surface-color: #FFFFFF;
             --text-primary: #0F172A;
             --text-secondary: #64748B;
             --border-color: #E2E8F0;
+            --accent-blue: #2563EB;
+            --accent-blue-light: #EFF6FF;
             --green-bg: #DCFCE7;
             --green-text: #15803D;
+            --red-bg: #FEE2E2;
+            --red-text: #B91C1C;
+            --gray-bg: #F1F5F9;
         }
 
         body {
@@ -32,11 +37,11 @@
             margin: 0 auto;
         }
 
-        /* 頂部區域 */
+        /* 頂部 Header 區域 */
         .header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-end;
             margin-bottom: 30px;
         }
 
@@ -44,48 +49,48 @@
             display: flex;
             align-items: center;
             gap: 16px;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         .header-title h1 {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 800;
             margin: 0;
             color: #0F172A;
-            letter-spacing: -0.5px;
+            letter-spacing: -1px;
         }
 
         .date-badge {
-            background-color: #1E293B;
-            color: #FFFFFF;
+            background-color: var(--accent-blue-light);
+            color: var(--accent-blue);
             font-size: 13px;
-            font-weight: 600;
-            padding: 4px 12px;
-            border-radius: 6px;
-            letter-spacing: 0.5px;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 8px;
             display: none;
+            border: 1px solid #DBEAFE;
         }
 
         .header-title p {
             margin: 0;
-            font-size: 14px;
+            font-size: 15px;
             color: var(--text-secondary);
             font-weight: 500;
         }
 
         .actions {
             display: flex;
-            gap: 12px;
+            gap: 14px;
         }
 
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 10px 16px;
-            font-size: 13px;
+            padding: 10px 20px;
+            font-size: 14px;
             font-weight: 600;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.2s;
             gap: 8px;
@@ -95,35 +100,44 @@
             background-color: var(--surface-color);
             color: var(--text-primary);
             border: 1px solid var(--border-color);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
 
-        .btn-outline:hover { background-color: #F1F5F9; }
+        .btn-outline:hover { background-color: var(--gray-bg); transform: translateY(-1px); }
 
         .btn-dark {
-            background-color: #000000;
+            background-color: #0F172A;
             color: #FFFFFF;
-            border: 1px solid #000000;
+            border: 1px solid #0F172A;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        .btn-dark:hover { background-color: #333333; }
+        .btn-dark:hover { background-color: #1E293B; transform: translateY(-1px); box-shadow: 0 6px 12px rgba(0,0,0,0.15); }
 
         input[type="file"] { display: none; }
 
-        /* KPI 卡片 */
+        /* KPI 數據卡片 (精緻化) */
         .kpi-grid {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
             gap: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .kpi-card {
             background: var(--surface-color);
-            border-radius: 12px;
-            padding: 24px 20px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.03), 0 1px 2px rgba(0,0,0,0.02);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02), 0 2px 4px -2px rgba(0,0,0,0.02);
+            border: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
         }
 
         .kpi-header {
@@ -134,16 +148,31 @@
         }
 
         .kpi-label {
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 700;
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             line-height: 1.4;
-            max-width: 80%;
+            max-width: 75%;
         }
 
-        .kpi-icon { color: #94A3B8; }
+        /* 帶有背景色的圖標設計 */
+        .icon-wrapper {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .kpi-card:nth-child(1) .icon-wrapper { background: #EEF2FF; color: #4F46E5; } /* Vacancies */
+        .kpi-card:nth-child(2) .icon-wrapper { background: #F8FAFC; color: #64748B; } /* CVs */
+        .kpi-card:nth-child(3) .icon-wrapper { background: #FFF7ED; color: #EA580C; } /* HR */
+        .kpi-card:nth-child(4) .icon-wrapper { background: #FEF2F2; color: #E11D48; } /* Final */
+        .kpi-card:nth-child(5) .icon-wrapper { background: #F0FDF4; color: #16A34A; } /* Offer */
+        .kpi-card:nth-child(6) .icon-wrapper { background: #FAF5FF; color: #9333EA; } /* Onboard */
 
         .kpi-value-row {
             display: flex;
@@ -153,10 +182,10 @@
         }
 
         .kpi-value {
-            font-size: 36px;
+            font-size: 40px;
             font-weight: 800;
             color: var(--text-primary);
-            line-height: 0.9;
+            line-height: 1;
             letter-spacing: -1px;
         }
 
@@ -167,63 +196,135 @@
             border-radius: 6px;
             display: inline-flex;
             align-items: center;
-            margin-bottom: 2px;
+            margin-bottom: 4px;
         }
 
         .trend-up { background-color: var(--green-bg); color: var(--green-text); }
-        .trend-down { background-color: #FEE2E2; color: #B91C1C; }
-        .trend-neutral { background-color: #F1F5F9; color: #64748B; }
+        .trend-down { background-color: var(--red-bg); color: var(--red-text); }
+        .trend-neutral { background-color: var(--gray-bg); color: var(--text-secondary); }
 
-        /* 數據表格 */
-        .table-container {
+        /* 一體化招募漏斗 (Unified Funnel) */
+        .unified-funnel {
             background: var(--surface-color);
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.03), 0 1px 2px rgba(0,0,0,0.02);
-            padding: 0 10px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+            overflow: hidden;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            table-layout: auto; 
+        .funnel-step {
+            flex: 1;
+            padding: 24px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
         }
 
-        th, td {
-            padding: 20px 16px;
-            font-size: 13px;
-            border-bottom: 1px solid var(--border-color);
+        /* 分割線 */
+        .funnel-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 20%;
+            bottom: 20%;
+            width: 1px;
+            background-color: var(--border-color);
         }
 
-        th {
-            color: var(--text-secondary);
-            font-weight: 700;
-            text-transform: uppercase;
+        .funnel-info p { 
+            margin: 0 0 6px 0; 
+            font-size: 13px; 
+            font-weight: 800; 
+            color: #0F172A; 
+            text-transform: uppercase; 
             letter-spacing: 0.5px;
-            font-size: 11px;
-            text-align: left;
-            white-space: nowrap; 
-        }
-
-        td {
-            color: var(--text-primary);
-            font-weight: 500;
         }
         
-        td.company-col { font-weight: 600; color: #0F172A; }
+        .funnel-info span { 
+            font-size: 12px; 
+            color: var(--text-secondary); 
+            font-weight: 500; 
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .funnel-rate { 
+            font-size: 34px; 
+            font-weight: 800; 
+            color: var(--accent-blue); 
+            letter-spacing: -1px; 
+        }
 
-        .num-col { text-align: center; font-variant-numeric: tabular-nums; }
+        /* 數據明細表 */
+        .table-container {
+            background: var(--surface-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+            padding: 0;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        table { width: 100%; border-collapse: collapse; table-layout: auto; }
+        
+        th, td { 
+            padding: 20px 24px; 
+            font-size: 14px; 
+            border-bottom: 1px solid var(--border-color); 
+        }
+        
+        th { 
+            background: #F8FAFC;
+            color: var(--text-secondary); 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px; 
+            font-size: 12px; 
+            text-align: left; 
+            white-space: nowrap; 
+        }
+        
+        td { color: var(--text-primary); font-weight: 500; }
+        td.company-col { font-weight: 700; color: #0F172A; }
+        
+        /* 智慧 Channel 標籤化 */
+        .channel-tag {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+        
+        /* 動態顏色 Class */
+        .tag-linkedin { background-color: #E0F2FE; color: #0284C7; }
+        .tag-referral { background-color: #DCFCE7; color: #16A34A; }
+        .tag-agency { background-color: #F3E8FF; color: #9333EA; }
+        .tag-jobsdb { background-color: #FFEDD5; color: #EA580C; }
+        .tag-default { background-color: #F1F5F9; color: #475569; }
+
+        .num-col { text-align: center; font-variant-numeric: tabular-nums; font-weight: 600; }
         th.num-col { text-align: center; }
-
-        tfoot td {
-            font-weight: 800;
-            color: #0F172A;
-            border-bottom: none;
+        
+        tfoot { background: #F8FAFC; }
+        tfoot td { 
+            font-weight: 800; 
+            color: #0F172A; 
+            border-bottom: none; 
+            border-top: 2px solid #CBD5E1; 
+            font-size: 15px;
         }
 
         @media print {
             body { background: #FFFFFF; padding: 0; }
             .actions { display: none !important; }
-            .kpi-card, .table-container { box-shadow: none; border: 1px solid #E2E8F0; }
+            .kpi-card, .unified-funnel, .table-container { box-shadow: none; border: 1px solid #E2E8F0; }
+            .channel-tag { border: 1px solid currentColor; background: none !important; }
         }
     </style>
 </head>
@@ -241,24 +342,38 @@
         
         <div class="actions">
             <button class="btn btn-outline" onclick="downloadTemplate()">
-                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                 下載空白 Excel 範本
             </button>
-
             <label for="excel-upload" class="btn btn-dark">
-                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
                 載入報表
             </label>
             <input type="file" id="excel-upload" accept=".xlsx, .xls">
         </div>
     </div>
 
-    <!-- 帶有極簡 SVG Icon 的 KPI 區塊 -->
+    <!-- 懸浮圖標設計的 KPI 卡片 -->
     <div class="kpi-grid">
         <div class="kpi-card">
             <div class="kpi-header">
+                <div class="kpi-label">Vacancies</div>
+                <div class="icon-wrapper">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                </div>
+            </div>
+            <div class="kpi-value-row">
+                <div class="kpi-value" id="kpi-vacancy">0</div>
+                <div class="trend-badge trend-neutral" id="trend-vacancy">0%</div>
+            </div>
+        </div>
+
+        <div class="kpi-card">
+            <div class="kpi-header">
                 <div class="kpi-label">CVs Recommended</div>
-                <svg class="kpi-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                <div class="icon-wrapper">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                </div>
             </div>
             <div class="kpi-value-row">
                 <div class="kpi-value" id="kpi-cv">0</div>
@@ -268,19 +383,10 @@
         
         <div class="kpi-card">
             <div class="kpi-header">
-                <div class="kpi-label">Candidates Interviewed</div>
-                <svg class="kpi-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-            </div>
-            <div class="kpi-value-row">
-                <div class="kpi-value" id="kpi-candidate">0</div>
-                <div class="trend-badge trend-neutral" id="trend-candidate">0%</div>
-            </div>
-        </div>
-
-        <div class="kpi-card">
-            <div class="kpi-header">
                 <div class="kpi-label">Recruiters Interviewed</div>
-                <svg class="kpi-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                <div class="icon-wrapper">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                </div>
             </div>
             <div class="kpi-value-row">
                 <div class="kpi-value" id="kpi-hr">0</div>
@@ -291,7 +397,9 @@
         <div class="kpi-card">
             <div class="kpi-header">
                 <div class="kpi-label">Final Interviews</div>
-                <svg class="kpi-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <div class="icon-wrapper">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
             </div>
             <div class="kpi-value-row">
                 <div class="kpi-value" id="kpi-final">0</div>
@@ -302,7 +410,9 @@
         <div class="kpi-card">
             <div class="kpi-header">
                 <div class="kpi-label">Monthly Offered</div>
-                <svg class="kpi-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <div class="icon-wrapper">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                </div>
             </div>
             <div class="kpi-value-row">
                 <div class="kpi-value" id="kpi-offer">0</div>
@@ -313,7 +423,9 @@
         <div class="kpi-card">
             <div class="kpi-header">
                 <div class="kpi-label">Pre-Onboarding</div>
-                <svg class="kpi-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                <div class="icon-wrapper">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                </div>
             </div>
             <div class="kpi-value-row">
                 <div class="kpi-value" id="kpi-onboard">0</div>
@@ -322,14 +434,50 @@
         </div>
     </div>
 
+    <!-- 一體化招募漏斗 (Unified Funnel) -->
+    <div class="unified-funnel">
+        <div class="funnel-step">
+            <div class="funnel-info">
+                <p>Vacancy Fill Rate</p>
+                <span>
+                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                    Onboarding / Vacancies
+                </span>
+            </div>
+            <div class="funnel-rate" id="conv-fill">0%</div>
+        </div>
+        <div class="funnel-step">
+            <div class="funnel-info">
+                <p>CV Quality Rate</p>
+                <span>
+                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                    HR Interviews / CVs
+                </span>
+            </div>
+            <div class="funnel-rate" id="conv-screen">0%</div>
+        </div>
+        <div class="funnel-step">
+            <div class="funnel-info">
+                <p>Offer Acceptance</p>
+                <span>
+                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Onboarding / Offered
+                </span>
+            </div>
+            <div class="funnel-rate" id="conv-accept">0%</div>
+        </div>
+    </div>
+
+    <!-- 數據明細表 -->
     <div class="table-container">
         <table>
             <thead>
                 <tr>
+                    <th>Channel</th>
                     <th>Company</th>
                     <th>Position</th>
+                    <th class="num-col">Vacancies</th>
                     <th class="num-col">CVs Recommended</th>
-                    <th class="num-col">Candidates Interviewed</th>
                     <th class="num-col">Recruiters Interviewed</th>
                     <th class="num-col">Final Interviews</th>
                     <th class="num-col">Monthly Offered</th>
@@ -337,13 +485,13 @@
                 </tr>
             </thead>
             <tbody id="table-body">
-                <tr><td colspan="8" style="text-align: center; color: #94A3B8; padding: 60px 0; font-weight: 500;">請點選「下載空白 Excel 範本」填寫資料後載入報表</td></tr>
+                <tr><td colspan="9" style="text-align: center; color: #94A3B8; padding: 60px 0; font-weight: 500;">請點選「下載空白 Excel 範本」填寫資料後載入報表</td></tr>
             </tbody>
             <tfoot id="table-foot" style="display: none;">
                 <tr>
-                    <td colspan="2" class="company-col">Grand Total</td>
+                    <td colspan="3" class="company-col" style="text-align: right;">Grand Total</td>
+                    <td class="num-col" id="tot-vacancy">0</td>
                     <td class="num-col" id="tot-cv">0</td>
-                    <td class="num-col" id="tot-candidate">0</td>
                     <td class="num-col" id="tot-hr">0</td>
                     <td class="num-col" id="tot-final">0</td>
                     <td class="num-col" id="tot-offer">0</td>
@@ -355,7 +503,6 @@
 </div>
 
 <script>
-    // 產生重新設計的空白範本 (只填寫一次 Last Period 總數)
     function downloadTemplate() {
         const wsData = [
             ["[Dashboard Settings]"],
@@ -364,14 +511,14 @@
             ["Report Date", "August 2026"],
             [], 
             ["[Last Period Overall Totals]"],
-            ["Last CVs", "Last Candidates", "Last Recruiters", "Last Final", "Last Offered", "Last Onboarding"],
+            ["Last Vacancies", "Last CVs Recommended", "Last Recruiters Interviewed", "Last Final Interviews", "Last Monthly Offered", "Last Onboarding"],
             ["", "", "", "", "", ""], 
             [], 
             ["[Current Month Details]"],
-            ["Company", "Position", "CVs Recommended", "Candidates Interviewed", "Recruiters Interviewed", "Final Interviews", "Monthly Offered", "Pre-onboarding"],
-            ["", "", "", "", "", "", "", ""],
-            ["", "", "", "", "", "", "", ""],
-            ["", "", "", "", "", "", "", ""]
+            ["Channel", "Company", "Position", "Vacancies", "CVs Recommended", "Recruiters Interviewed", "Final Interviews", "Monthly Offered", "Pre-onboarding"],
+            ["LinkedIn", "Legan Group", "DevSecOps Engineer", "", "", "", "", "", ""],
+            ["Referral", "Legan Group", "UPS Engineer", "", "", "", "", "", ""],
+            ["JobsDB", "Legan Group", "HR Officer", "", "", "", "", "", ""]
         ];
 
         const wb = XLSX.utils.book_new();
@@ -389,18 +536,26 @@
             var data = new Uint8Array(e.target.result);
             var workbook = XLSX.read(data, {type: 'array'});
             var sheet = workbook.Sheets[workbook.SheetNames[0]];
-            
-            // 使用 aoa 解析，方便尋找特定區塊
             var rawData = XLSX.utils.sheet_to_json(sheet, {header: 1});
             processAndRender(rawData);
         };
         reader.readAsArrayBuffer(file);
     });
 
+    // 智慧判斷 Channel 給予不同顏色 class
+    function getChannelColorClass(channelStr) {
+        if (!channelStr) return 'tag-default';
+        let lower = channelStr.toLowerCase();
+        if (lower.includes('linkedin')) return 'tag-linkedin';
+        if (lower.includes('referral') || lower.includes('internal')) return 'tag-referral';
+        if (lower.includes('agency') || lower.includes('headhunt')) return 'tag-agency';
+        if (lower.includes('jobsdb') || lower.includes('portal')) return 'tag-jobsdb';
+        return 'tag-default';
+    }
+
     function processAndRender(rawData) {
         if (!rawData || rawData.length < 5) return;
 
-        // 1. 抓取設定區
         let pageTitle = "Recruitment Overview";
         let pageSubtitle = "Monthly pipeline performance & conversion metrics";
         let reportDate = "";
@@ -423,49 +578,50 @@
             dateEl.style.display = 'none';
         }
 
-        let prevTotals = { cv: 0, candidate: 0, hr: 0, final: 0, offer: 0, onboard: 0 };
-        let currTotals = { cv: 0, candidate: 0, hr: 0, final: 0, offer: 0, onboard: 0 };
+        let prevTotals = { vacancy: 0, cv: 0, hr: 0, final: 0, offer: 0, onboard: 0 };
+        let currTotals = { vacancy: 0, cv: 0, hr: 0, final: 0, offer: 0, onboard: 0 };
         let parsedRows = [];
 
-        // 2. 抓取 [Last Period Overall Totals] 只有一列數據
-        let lastHeaderIdx = rawData.findIndex(r => r && r[0] === "Last CVs");
+        // 讀取上期數據
+        let lastHeaderIdx = rawData.findIndex(r => r && r[0] === "Last Vacancies");
         if (lastHeaderIdx !== -1 && rawData[lastHeaderIdx + 1]) {
             let pRow = rawData[lastHeaderIdx + 1];
-            prevTotals.cv = parseInt(pRow[0]) || 0;
-            prevTotals.candidate = parseInt(pRow[1]) || 0;
+            prevTotals.vacancy = parseInt(pRow[0]) || 0;
+            prevTotals.cv = parseInt(pRow[1]) || 0;
             prevTotals.hr = parseInt(pRow[2]) || 0;
             prevTotals.final = parseInt(pRow[3]) || 0;
             prevTotals.offer = parseInt(pRow[4]) || 0;
             prevTotals.onboard = parseInt(pRow[5]) || 0;
         }
 
-        // 3. 抓取 [Current Month Details] 遍歷各職位
-        let currHeaderIdx = rawData.findIndex(r => r && r[0] === "Company");
+        // 讀取當期明細
+        let currHeaderIdx = rawData.findIndex(r => r && r[0] === "Channel");
         if (currHeaderIdx !== -1) {
             for(let i = currHeaderIdx + 1; i < rawData.length; i++) {
                 let row = rawData[i];
-                if(!row || row.length === 0 || !row[0]) continue; // 跳過空行
+                if(!row || row.length === 0 || !row[0]) continue; 
                 
-                let cv = parseInt(row[2]) || 0;
-                let cand = parseInt(row[3]) || 0;
-                let hr = parseInt(row[4]) || 0;
-                let fin = parseInt(row[5]) || 0;
-                let off = parseInt(row[6]) || 0;
-                let onb = parseInt(row[7]) || 0;
+                let vac = parseInt(row[3]) || 0;
+                let cv = parseInt(row[4]) || 0;
+                let hr = parseInt(row[5]) || 0;
+                let fin = parseInt(row[6]) || 0;
+                let off = parseInt(row[7]) || 0;
+                let onb = parseInt(row[8]) || 0;
 
                 parsedRows.push({
-                    'Company': row[0],
-                    'Position': row[1],
+                    'Channel': row[0] || 'Direct',
+                    'Company': row[1] || '-',
+                    'Position': row[2] || '-',
+                    'Vacancies': vac,
                     'CVs Recommended': cv,
-                    'Candidates Interviewed': cand,
                     'Recruiters Interviewed': hr,
                     'Final Interviews': fin,
                     'Monthly Offered': off,
                     'Pre-onboarding': onb
                 });
 
+                currTotals.vacancy += vac;
                 currTotals.cv += cv;
-                currTotals.candidate += cand;
                 currTotals.hr += hr;
                 currTotals.final += fin;
                 currTotals.offer += off;
@@ -473,28 +629,39 @@
             }
         }
 
-        // 4. 渲染下方的 HTML 表格
+        // 計算效能分析
+        let fillRate = currTotals.vacancy > 0 ? Math.round((currTotals.onboard / currTotals.vacancy) * 100) : 0;
+        let screeningRate = currTotals.cv > 0 ? Math.round((currTotals.hr / currTotals.cv) * 100) : 0;
+        let acceptRate = currTotals.offer > 0 ? Math.round((currTotals.onboard / currTotals.offer) * 100) : 0;
+
+        document.getElementById('conv-fill').innerText = fillRate + '%';
+        document.getElementById('conv-screen').innerText = screeningRate + '%';
+        document.getElementById('conv-accept').innerText = acceptRate + '%';
+
+        // 渲染表格 (套用智慧標籤顏色)
         let tbody = document.getElementById('table-body');
         tbody.innerHTML = '';
-        
         parsedRows.forEach(row => {
             let tr = document.createElement('tr');
+            let tagClass = getChannelColorClass(row['Channel']);
+            
             tr.innerHTML = `
-                <td class="company-col">${row['Company'] || '-'}</td>
-                <td style="color: #64748B;">${row['Position'] || '-'}</td>
-                <td class="num-col">${row['CVs Recommended'] || 0}</td>
-                <td class="num-col">${row['Candidates Interviewed'] || 0}</td>
-                <td class="num-col">${row['Recruiters Interviewed'] || 0}</td>
-                <td class="num-col">${row['Final Interviews'] || 0}</td>
-                <td class="num-col">${row['Monthly Offered'] || 0}</td>
-                <td class="num-col">${row['Pre-onboarding'] || 0}</td>
+                <td><span class="channel-tag ${tagClass}">${row['Channel']}</span></td>
+                <td class="company-col">${row['Company']}</td>
+                <td style="color: #64748B;">${row['Position']}</td>
+                <td class="num-col">${row['Vacancies']}</td>
+                <td class="num-col">${row['CVs Recommended']}</td>
+                <td class="num-col">${row['Recruiters Interviewed']}</td>
+                <td class="num-col">${row['Final Interviews']}</td>
+                <td class="num-col">${row['Monthly Offered']}</td>
+                <td class="num-col">${row['Pre-onboarding']}</td>
             `;
             tbody.appendChild(tr);
         });
 
-        // 5. 渲染 KPI 卡片與增長率
+        // 渲染 KPI 與趨勢
         const keysMap = [
-            { key: 'cv', id: 'cv' }, { key: 'candidate', id: 'candidate' },
+            { key: 'vacancy', id: 'vacancy' }, { key: 'cv', id: 'cv' },
             { key: 'hr', id: 'hr' }, { key: 'final', id: 'final' },
             { key: 'offer', id: 'offer' }, { key: 'onboard', id: 'onboard' }
         ];
